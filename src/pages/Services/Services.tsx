@@ -1,7 +1,8 @@
+import HomePage from "@/components/table/demo-table"
 
 const Services = () => {
   return (
-    <div>Services</div>
+    <HomePage />
   )
 }
 
