@@ -11,7 +11,7 @@ import {
     ClipboardCheck,
     Receipt,
     Cog,
-    Sliders} from 'lucide-react';
+    Phone} from 'lucide-react';
 import { ElementType } from 'react';
 
 export interface Route {
@@ -96,9 +96,9 @@ export const routes: Route[] = [
                 id: '5.3',
                 children: [
                     {
-                        path: '/settings/help/jadu',
-                        title: 'Jadu',
-                        icon: Sliders,
+                        path: '/settings/help/contact-us',
+                        title: 'Contact Us',
+                        icon: Phone,
                         id: '5.3.1',
 
                     }

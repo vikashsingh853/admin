@@ -7,7 +7,7 @@ import Services from "./pages/Services/Services";
 import Consumers from "./pages/Users/Consumers";
 import Bookings from "./pages/Orders/Bookings";
 import Refunds from "./pages/Orders/Refunds";
-import Jadu from "./pages/Settings/Help/Jadu";
+import Jadu from "./pages/Settings/Help/ContactUs";
 import AdminLayout from "./components/core/admin-layout";
 import Sahayaata from "./pages/Users/Sahayaata";
 
@@ -64,9 +64,9 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <Navigate to="jadu" replace />
+                element: <Navigate to="contact-us" replace />
               },
-              { path: "jadu", element: <Jadu /> },
+              { path: "contact-us", element: <Jadu /> },
             ]
           },
 
