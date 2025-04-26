@@ -33,7 +33,7 @@ const formatBreadcrumbTitle = (path: string): string => {
 
     // If it's an ID parameter (assuming numeric or UUID format)
     if (/^\d+$/.test(lastSegment) || /^[0-9a-f-]{36}$/.test(lastSegment)) {
-        return 'Details';
+        return  'Details';
     }
 
     // Fallback: Capitalize first letter and add spaces before capital letters
@@ -64,8 +64,11 @@ export const useNavigation = () => {
 
     // Build the breadcrumb path segments
     const buildBreadcrumbs = () => {
-        const pathSegments = pathname.split('/').filter(Boolean);
+        const pathSegments = pathname.split('/').filter(Boolean).filter(segment => segment !== 'form');
         let currentPath = '';
+        if (pathSegments.includes('edit')) {
+            pathSegments.pop();
+        }
 
         return pathSegments.map((segment) => {
             currentPath += `/${segment}`;

@@ -202,8 +202,7 @@ export function DataTable<T extends Record<string, any>>({
             <div className="flex justify-between mb-4">
                 <div className="flex flex-col gap-4 md:flex-row md:flex-wrap md:gap-2">
                     {visibleColumns.map((col) => (
-                        <>
-                        {filterKeys?.includes(col)  &&<Input
+                        filterKeys?.includes(col)  &&<Input
                             key={col}
                             placeholder={`Search ${col}`}
                             value={filter[col] || ""}
@@ -211,8 +210,7 @@ export function DataTable<T extends Record<string, any>>({
                                 setFilter((prev) => ({ ...prev, [col]: e.target.value }))
                             }
                             className="w-40"
-                            />}
-                            </>
+                            />
                     ))}
                 </div>
 

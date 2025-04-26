@@ -1,8 +1,8 @@
-import HomePage from "@/components/table/demo-table"
+import ServicesTable from "@/components/table/demo-table"
 
 const Services = () => {
   return (
-    <HomePage />
+    <ServicesTable />
   )
 }
 

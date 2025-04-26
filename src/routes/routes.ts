@@ -43,7 +43,7 @@ export const routes: Route[] = [
         children: [
             {
                 path: '/users/sahayata',
-                title: 'Sahayaata',
+                title: 'Sahayata',
                 id: '3.1',
                 icon: HandshakeIcon
             },

@@ -3,7 +3,7 @@ import UserList from '../../components/Users/UserList'
 const Sahayaata = () => {
   return (
     <div>
-      <UserList/>
+      <UserList userType="Sahayaata" />
     </div>
   )
 }

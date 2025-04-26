@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
-const UserList = () => {
+const UserList = ({ userType }: { userType: string }) => {
     const navigate = useNavigate();
     const users = [
         { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin' },
@@ -11,8 +11,8 @@ const UserList = () => {
     return (
         <div className="space-y-6">
             <div className="flex justify-between items-center">
-                <h1 className="text-2xl font-semibold">Users</h1>
-                <Button onClick={() => navigate('/users/add')}>Add User</Button>
+                <h1 className="text-2xl font-semibold">{userType}</h1>
+                <Button onClick={() => navigate('/users/form/create')}>Add User</Button>
             </div>
             <div className="bg-white shadow rounded-lg overflow-auto">
                 <table className="w-full">
