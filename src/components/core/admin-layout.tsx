@@ -9,8 +9,8 @@ import { ProtectedRoute } from "../ProtectedRoute";
 
 const AdminLayout = () => {
     const [sidebarExpanded, setSidebarExpanded] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
-  const { breadcrumbs } = useNavigation();
+    const [isMobile, setIsMobile] = useState(false);
+    const { breadcrumbs } = useNavigation();
 
     useEffect(() => {
         const checkMobile = () => {
@@ -23,8 +23,8 @@ const AdminLayout = () => {
             }
         };
 
-      let timeoutId: ReturnType<typeof setTimeout>;
-      
+        let timeoutId: ReturnType<typeof setTimeout>;
+        
         const debouncedCheckMobile = () => {
             clearTimeout(timeoutId);
             timeoutId = setTimeout(checkMobile, 100);
@@ -38,33 +38,29 @@ const AdminLayout = () => {
             clearTimeout(timeoutId);
         };
     }, []);
-  
- 
 
-  const toggleSidebar = () => {
-    setSidebarExpanded(!sidebarExpanded);
-  };
+    const toggleSidebar = () => {
+        setSidebarExpanded(!sidebarExpanded);
+    };
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar toggleSidebar={toggleSidebar} />
-      <Sidebar isExpanded={sidebarExpanded} isMobile={isMobile} setSidebarExpanded={setSidebarExpanded} />
-      
-      <main className={cn(
-        "pt-16 transition-all duration-300 ",
-        sidebarExpanded ? "ml-0 lg:ml-64" : "ml-0 lg:ml-16"
-      )}>
-        <div className="p-4">
-          <Breadcrumb items={breadcrumbs} />
-          <div className="mt-4">
-            <Outlet />
-          </div>
+    return (
+        <div className="min-h-screen bg-background">
+            <Navbar toggleSidebar={toggleSidebar} />
+            <Sidebar isExpanded={sidebarExpanded} isMobile={isMobile} setSidebarExpanded={setSidebarExpanded} />
+            
+            <main className={cn(
+                "pt-16 transition-all duration-300",
+                sidebarExpanded ? "ml-0 lg:ml-64" : "ml-0 lg:ml-16"
+            )}>
+                <div className="p-4">
+                    <Breadcrumb items={breadcrumbs} />
+                    <div className="mt-4">
+                        <Outlet />
+                    </div>
+                </div>
+            </main>
         </div>
-      </main>
-      </div>
-  );
+    );
 };
-
-
 
 export default AdminLayout;

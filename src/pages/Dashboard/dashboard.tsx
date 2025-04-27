@@ -13,11 +13,11 @@ const revenueData = [
 
 const userGrowthData = [
   { name: 'Jan', users: 400 },
-  { name: 'Feb', users: 600 },
-  { name: 'Mar', users: 800 },
-  { name: 'Apr', users: 1000 },
-  { name: 'May', users: 1200 },
-  { name: 'Jun', users: 1400 },
+  { name: 'Feb', users: 300 },
+  { name: 'Mar', users: 500 },
+  { name: 'Apr', users: 278 },
+  { name: 'May', users: 189 },
+  { name: 'Jun', users: 239 },
 ];
 
 const serviceDistributionData = [
@@ -36,14 +36,14 @@ const Dashboard = () => {
       
       {/* Statistics Cards */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <div className="bg-white p-6 rounded-lg shadow">
+        <div className="bg-card p-6 rounded-lg shadow">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-medium text-gray-500">Total Users</h2>
+              <h2 className="text-lg font-medium text-muted-foreground">Total Users</h2>
               <p className="text-3xl font-bold mt-2">1,234</p>
             </div>
-            <div className="p-3 bg-blue-100 rounded-full">
-              <Users className="h-6 w-6 text-blue-600" />
+            <div className="p-3 bg-primary/10 rounded-full">
+              <Users className="h-6 w-6 text-primary" />
             </div>
           </div>
           <div className="flex items-center mt-4 text-sm text-green-600">
@@ -52,14 +52,14 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow">
+        <div className="bg-card p-6 rounded-lg shadow">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-medium text-gray-500">Active Sessions</h2>
+              <h2 className="text-lg font-medium text-muted-foreground">Active Sessions</h2>
               <p className="text-3xl font-bold mt-2">56</p>
             </div>
-            <div className="p-3 bg-green-100 rounded-full">
-              <Activity className="h-6 w-6 text-green-600" />
+            <div className="p-3 bg-green-500/10 rounded-full">
+              <Activity className="h-6 w-6 text-green-500" />
             </div>
           </div>
           <div className="flex items-center mt-4 text-sm text-red-600">
@@ -68,14 +68,14 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow">
+        <div className="bg-card p-6 rounded-lg shadow">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-medium text-gray-500">Total Revenue</h2>
+              <h2 className="text-lg font-medium text-muted-foreground">Total Revenue</h2>
               <p className="text-3xl font-bold mt-2">$12,345</p>
             </div>
-            <div className="p-3 bg-purple-100 rounded-full">
-              <DollarSign className="h-6 w-6 text-purple-600" />
+            <div className="p-3 bg-purple-500/10 rounded-full">
+              <DollarSign className="h-6 w-6 text-purple-500" />
             </div>
           </div>
           <div className="flex items-center mt-4 text-sm text-green-600">
@@ -84,14 +84,14 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow">
+        <div className="bg-card p-6 rounded-lg shadow">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-medium text-gray-500">Avg. Session</h2>
+              <h2 className="text-lg font-medium text-muted-foreground">Avg. Session</h2>
               <p className="text-3xl font-bold mt-2">4m 32s</p>
             </div>
-            <div className="p-3 bg-yellow-100 rounded-full">
-              <Clock className="h-6 w-6 text-yellow-600" />
+            <div className="p-3 bg-yellow-500/10 rounded-full">
+              <Clock className="h-6 w-6 text-yellow-500" />
             </div>
           </div>
           <div className="flex items-center mt-4 text-sm text-green-600">
@@ -104,14 +104,14 @@ const Dashboard = () => {
       {/* Charts */}
       <div className="grid gap-6 md:grid-cols-2">
         {/* Revenue Trend Chart */}
-        <div className="bg-white p-6 rounded-lg shadow">
+        <div className="bg-card p-6 rounded-lg shadow">
           <h2 className="text-lg font-medium mb-4">Revenue Trend</h2>
           <div className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={revenueData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
+                <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
+                <XAxis dataKey="name" className="text-muted-foreground" />
+                <YAxis className="text-muted-foreground" />
                 <Tooltip />
                 <Legend />
                 <Line type="monotone" dataKey="revenue" stroke="#8884d8" strokeWidth={2} />
@@ -121,14 +121,14 @@ const Dashboard = () => {
         </div>
 
         {/* User Growth Chart */}
-        <div className="bg-white p-6 rounded-lg shadow">
+        <div className="bg-card p-6 rounded-lg shadow">
           <h2 className="text-lg font-medium mb-4">User Growth</h2>
           <div className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={userGrowthData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
+                <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
+                <XAxis dataKey="name" className="text-muted-foreground" />
+                <YAxis className="text-muted-foreground" />
                 <Tooltip />
                 <Legend />
                 <Bar dataKey="users" fill="#82ca9d" />
@@ -138,7 +138,7 @@ const Dashboard = () => {
         </div>
 
         {/* Service Distribution Chart */}
-        <div className="bg-white p-6 rounded-lg shadow">
+        <div className="bg-card p-6 rounded-lg shadow">
           <h2 className="text-lg font-medium mb-4">Service Distribution</h2>
           <div className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">

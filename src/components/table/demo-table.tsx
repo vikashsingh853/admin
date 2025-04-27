@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 
 type Service = {
     id: number;
@@ -75,6 +76,16 @@ const initialServices: Service[] = [
     }
 ];
 
+type StatusOption = {
+    label: string;
+    value: string;
+};
+
+const statusOptions: StatusOption[] = [
+    { label: "Active", value: "active" },
+    { label: "Inactive", value: "inactive" }
+];
+
 export default function ServicesTable() {
     const [services, setServices] = useState<Service[]>(initialServices);
     const [editingService, setEditingService] = useState<Service | null>(null);
@@ -121,6 +132,17 @@ export default function ServicesTable() {
                 mandatoryKeys={['name', 'price', 'category']}
                 shownKeys={['description', 'duration', 'status', 'createdAt']}
                 filterKeys={['name', 'category', 'status']}
+                customRenderers={{
+                    status: (value: string) => (
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                            value === 'active' 
+                                ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100' 
+                                : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100'
+                        }`}>
+                            {value}
+                        </span>
+                    )
+                }}
             />
 
             <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
@@ -178,15 +200,23 @@ export default function ServicesTable() {
                             </div>
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="status" className="text-right">Status</Label>
-                                <select
-                                    id="status"
+                                <Select
                                     value={editingService.status}
-                                    onChange={(e) => setEditingService({...editingService, status: e.target.value as 'active' | 'inactive'})}
-                                    className="col-span-3 p-2 border rounded"
+                                    onValueChange={(value) => setEditingService({ ...editingService, status: value as 'active' | 'inactive' })}
                                 >
-                                    <option value="active">Active</option>
-                                    <option value="inactive">Inactive</option>
-                                </select>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select a service" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {statusOptions
+                                            .map((service: StatusOption) => (
+                                                <SelectItem key={service.value} value={service.value} className="cursor-pointer">
+                                                    {service.label}
+                                                </SelectItem>
+                                            ))}
+                                    </SelectContent>
+                                </Select>
+                                
                             </div>
                         </div>
                     )}

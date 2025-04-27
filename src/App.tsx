@@ -16,6 +16,7 @@ import AddBooking from "./pages/Orders/bookings/AddBooking";
 import BookingDetails from "./pages/Orders/bookings/BookingDetails";
 import LoginPage from "./pages/auth/login";
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import { ThemeProvider } from "./contexts/ThemeContext";
 
 const router = createBrowserRouter([
   {
@@ -85,16 +86,19 @@ const router = createBrowserRouter([
               { path: "contact-us", element: <Jadu /> },
             ]
           },
-
         ]
       }
     ]
   }
 ]);
 
-const App = () => {
-  return <RouterProvider router={router} />;
-};
+function App() {
+  return (
+    <ThemeProvider>
+      <RouterProvider router={router} />
+    </ThemeProvider>
+  );
+}
 
 export default App;
 

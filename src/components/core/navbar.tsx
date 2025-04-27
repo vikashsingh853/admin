@@ -22,6 +22,7 @@ import { useState, useEffect } from 'react';
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from '@/contexts/AuthContext';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 interface NavProps{
   toggleSidebar:()=>void
@@ -99,36 +100,71 @@ const Navbar = ({ toggleSidebar }: NavProps) => {
     }));
   };
 
+  const handleProfileUpdate = async () => {
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      toast({
+        title: "Profile updated",
+        description: "Your profile has been updated successfully.",
+      });
+      setShowProfileModal(false);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to update profile. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
-    <nav className="border-b bg-white fixed z-30 w-full">
+    <nav className="border-b bg-background fixed z-30 w-full">
       <div className="flex h-16 items-center justify-between px-4">
         <div className='flex items-center gap-2'>
           <Button
             variant="ghost"
             size="icon"
             onClick={toggleSidebar}
-            className="p-2 hover:bg-gray-100 rounded-md"
+            className="p-2 hover:bg-accent rounded-md"
           >
             <Menu className="h-6 w-6" />
           </Button>
-          <span className=' hidden md:block font-semibold text-purple-600 text-lg'>Admin Demo</span>
+          <span className='hidden md:block font-semibold text-primary text-lg'>Admin Demo</span>
         </div>
        
         <div className="flex items-center space-x-4 lg:space-x-6 mx-6">
-          <Input
-            type="search"
-            placeholder="Search..."
-            className="w-[180px] lg:w-[400px]"
-          />
+          <div className="relative w-64">
+            <Input
+              type="search"
+              placeholder="Search..."
+              className="pl-8"
+            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+          </div>
         </div>
         
         <div className='flex space-x-2 items-center'>
+          <ThemeToggle />
           <span className='hidden md:block'>Hi, { user?.displayName}</span>
-          <div className=" flex items-center space-x-8">
+          <div className="flex items-center space-x-8">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="h-8 w-8 rounded-full">
-                  <div className="p-2 rounded-full bg-gray-200 flex items-center justify-center">
+                  <div className="p-2 rounded-full bg-muted flex items-center justify-center">
                     <User />
                   </div>
                 </Button>
@@ -137,7 +173,7 @@ const Navbar = ({ toggleSidebar }: NavProps) => {
                 <DropdownMenuLabel>
                   <div className="flex flex-col space-y-1">
                     <p className="text-sm font-medium">Admin User</p>
-                    <p className="text-xs text-gray-500">{ user?.email}</p>
+                    <p className="text-xs text-muted-foreground">{ user?.email}</p>
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
@@ -156,19 +192,19 @@ const Navbar = ({ toggleSidebar }: NavProps) => {
       }}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Profile Information</DialogTitle>
+            <DialogTitle>Edit Profile</DialogTitle>
             <DialogDescription>
-              {isEditing ? "Edit your profile details" : "View and manage your profile details"}
+              Make changes to your profile here. Click save when you're done.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
             <div className="flex items-center space-x-4">
-              <div className="p-4 rounded-full bg-gray-200">
+              <div className="p-4 rounded-full bg-muted">
                 <User className="h-8 w-8" />
               </div>
               <div>
                 <h3 className="font-medium">{profileData.fullName}</h3>
-                <p className="text-sm text-gray-500">{profileData.email}</p>
+                <p className="text-sm text-muted-foreground">{profileData.email}</p>
               </div>
             </div>
             <div className="space-y-4">

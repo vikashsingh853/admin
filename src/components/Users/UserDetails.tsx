@@ -30,21 +30,21 @@ const UserDetails = () => {
                 </div>
             </div>
             
-            <div className="bg-white shadow rounded-lg p-6">
+            <div className="bg-card shadow rounded-lg p-6">
                 <div className="grid grid-cols-2 gap-6">
                     <div>
                         <h2 className="text-lg font-medium mb-4">Basic Information</h2>
                         <div className="space-y-4">
                             <div>
-                                <p className="text-sm text-gray-500">Name</p>
+                                <p className="text-sm text-muted-foreground">Name</p>
                                 <p className="font-medium">{user.name}</p>
                             </div>
                             <div>
-                                <p className="text-sm text-gray-500">Email</p>
+                                <p className="text-sm text-muted-foreground">Email</p>
                                 <p className="font-medium">{user.email}</p>
                             </div>
                             <div>
-                                <p className="text-sm text-gray-500">Role</p>
+                                <p className="text-sm text-muted-foreground">Role</p>
                                 <p className="font-medium">{user.role}</p>
                             </div>
                         </div>
@@ -54,15 +54,15 @@ const UserDetails = () => {
                         <h2 className="text-lg font-medium mb-4">Additional Information</h2>
                         <div className="space-y-4">
                             <div>
-                                <p className="text-sm text-gray-500">Status</p>
+                                <p className="text-sm text-muted-foreground">Status</p>
                                 <p className="font-medium">{user.status}</p>
                             </div>
                             <div>
-                                <p className="text-sm text-gray-500">Created At</p>
+                                <p className="text-sm text-muted-foreground">Created At</p>
                                 <p className="font-medium">{user.createdAt}</p>
                             </div>
                             <div>
-                                <p className="text-sm text-gray-500">Last Login</p>
+                                <p className="text-sm text-muted-foreground">Last Login</p>
                                 <p className="font-medium">{user.lastLogin}</p>
                             </div>
                         </div>

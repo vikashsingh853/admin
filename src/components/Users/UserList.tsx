@@ -14,14 +14,14 @@ const UserList = ({ userType }: { userType: string }) => {
                 <h1 className="text-2xl font-semibold">{userType}</h1>
                 <Button onClick={() => navigate('/users/form/create')}>Add User</Button>
             </div>
-            <div className="bg-white shadow rounded-lg overflow-auto">
+            <div className="bg-card shadow rounded-lg overflow-auto">
                 <table className="w-full">
                     <thead>
                         <tr className="border-b">
-                            <th className="px-6 py-3 text-left">Name</th>
-                            <th className="px-6 py-3 text-left">Email</th>
-                            <th className="px-6 py-3 text-left">Role</th>
-                            <th className="px-6 py-3 text-left">Actions</th>
+                            <th className="px-6 py-3 text-left text-muted-foreground">Name</th>
+                            <th className="px-6 py-3 text-left text-muted-foreground">Email</th>
+                            <th className="px-6 py-3 text-left text-muted-foreground">Role</th>
+                            <th className="px-6 py-3 text-left text-muted-foreground">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -31,10 +31,7 @@ const UserList = ({ userType }: { userType: string }) => {
                                 <td className="px-6 py-4">{user.email}</td>
                                 <td className="px-6 py-4">{user.role}</td>
                                 <td className="px-6 py-4">
-                                    <Button
-                                        variant="ghost"
-                                        onClick={() => navigate(`/users/${user.id}`)}
-                                    >
+                                    <Button variant="ghost" onClick={() => navigate(`/users/${user.id}`)}>
                                         View
                                     </Button>
                                 </td>

@@ -7,7 +7,78 @@ import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 
+// Define the Service type and initial services locally
+type Service = {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    duration: string;
+    category: string;
+    status: 'active' | 'inactive';
+    createdAt: string;
+};
+
+const initialServices: Service[] = [
+    {
+        id: 1,
+        name: "Haircut & Styling",
+        description: "Professional haircut and styling service",
+        price: 35,
+        duration: "45 mins",
+        category: "Hair",
+        status: "active",
+        createdAt: "2024-03-01"
+    },
+    {
+        id: 2,
+        name: "Deep Tissue Massage",
+        description: "Full body deep tissue massage",
+        price: 85,
+        duration: "60 mins",
+        category: "Massage",
+        status: "active",
+        createdAt: "2024-03-02"
+    },
+    {
+        id: 3,
+        name: "Facial Treatment",
+        description: "Luxury facial with premium products",
+        price: 65,
+        duration: "45 mins",
+        category: "Skin Care",
+        status: "active",
+        createdAt: "2024-03-03"
+    },
+    {
+        id: 4,
+        name: "Manicure & Pedicure",
+        description: "Complete nail care service",
+        price: 55,
+        duration: "75 mins",
+        category: "Nails",
+        status: "active",
+        createdAt: "2024-03-04"
+    },
+    {
+        id: 5,
+        name: "Hot Stone Massage",
+        description: "Relaxing hot stone therapy",
+        price: 95,
+        duration: "90 mins",
+        category: "Massage",
+        status: "inactive",
+        createdAt: "2024-03-05"
+    }
+];
 
 const AddBooking = () => {
     const navigate = useNavigate();
@@ -188,20 +259,24 @@ const AddBooking = () => {
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="service">Service *</Label>
-                                <select
-                                    id="service"
-                                    name="service"
+                                <Select
                                     value={formData.service}
-                                    onChange={handleChange}
-                                    className="w-full p-2 border rounded-md"
+                                    onValueChange={(value: string) => setFormData(prev => ({ ...prev, service: value }))}
                                     disabled={isLoading}
                                 >
-                                    <option value="">Select a service</option>
-                                    <option value="Home Cleaning">Home Cleaning</option>
-                                    <option value="Plumbing">Plumbing</option>
-                                    <option value="Electrical">Electrical</option>
-                                    <option value="Carpentry">Carpentry</option>
-                                </select>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select a service" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {initialServices
+                                            .filter((service: Service) => service.status === 'active')
+                                            .map((service: Service) => (
+                                                <SelectItem key={service.id} value={service.name}>
+                                                    {service.name} - ${service.price} ({service.duration})
+                                                </SelectItem>
+                                            ))}
+                                    </SelectContent>
+                                </Select>
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="date">Date *</Label>

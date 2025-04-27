@@ -14,25 +14,25 @@ interface BreadcrumbProps {
 
 export const Breadcrumb: FC<BreadcrumbProps> = ({ items }) => {
     return (
-        <nav aria-label="Breadcrumb" className="flex items-center space-x-2 text-sm text-gray-500">
+        <nav aria-label="Breadcrumb" className="flex items-center space-x-2 text-sm text-muted-foreground">
             <Link
                 to="/"
-                className="flex items-center text-gray-600 hover:text-gray-900"
+                className="flex items-center text-muted-foreground hover:text-foreground transition-colors"
             >
                 <Home className="h-4 w-4" />
             </Link>
 
             {items.map((item, index) => (
                 <div key={item.path} className="flex items-center">
-                    <ChevronRight className="h-4 w-4 mx-1 text-gray-400" />
+                    <ChevronRight className="h-4 w-4 mx-1 text-muted-foreground" />
                     {index === items.length - 1 ? (
-                        <span className="font-medium text-gray-900">
+                        <span className="font-medium text-foreground">
                             {item.title}
                         </span>
                     ) : (
                         <Link
                             to={item.path}
-                            className="hover:text-gray-900 transition-colors"
+                            className="hover:text-foreground transition-colors"
                         >
                             {item.title}
                         </Link>

@@ -1,14 +1,17 @@
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useNavigate, useParams } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 import { useState, useEffect } from "react";
 import { Loader2 } from "lucide-react";
 
 const UserAddForm = () => {
     const navigate = useNavigate();
-    const { id, mode } = useParams<{ id?: string; mode: string }>();
-    const isEdit = mode === 'edit';
+    const { mode, id } = useParams();
+    const { toast } = useToast();
     const [isLoading, setIsLoading] = useState(false);
-    const [isFetching, setIsFetching] = useState(isEdit);
+    const [isFetching, setIsFetching] = useState(mode === 'edit');
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [formData, setFormData] = useState({
         name: '',
@@ -19,7 +22,7 @@ const UserAddForm = () => {
     });
 
     useEffect(() => {
-        if (isEdit && id) {
+        if (mode === 'edit' && id) {
             const fetchUserData = async () => {
                 try {
                     setIsFetching(true);
@@ -48,7 +51,7 @@ const UserAddForm = () => {
 
             fetchUserData();
         }
-    }, [isEdit, id]);
+    }, [mode, id]);
 
     const validateForm = () => {
         const newErrors: Record<string, string> = {};
@@ -64,7 +67,7 @@ const UserAddForm = () => {
         }
 
         // Only validate password fields if it's not an edit or if password is being changed
-        if (!isEdit || formData.password || formData.confirmPassword) {
+        if (mode === 'create' || formData.password || formData.confirmPassword) {
             if (!formData.password) {
                 newErrors.password = 'Password is required';
             } else if (formData.password.length < 8) {
@@ -104,17 +107,19 @@ const UserAddForm = () => {
 
         setIsLoading(true);
         try {
-            // Here you would typically make an API call to create/update the user
-            console.log('Form submitted:', formData);
             // Simulate API call
             await new Promise(resolve => setTimeout(resolve, 1000));
+            toast({
+                title: "Success",
+                description: mode === 'create' ? "User created successfully" : "User updated successfully",
+            });
             navigate('/users');
         } catch (error) {
-            console.error('Error saving user:', error);
-            setErrors(prev => ({
-                ...prev,
-                submit: `Failed to ${isEdit ? 'update' : 'create'} user. Please try again.`
-            }));
+            toast({
+                title: "Error",
+                description: "Failed to save user. Please try again.",
+                variant: "destructive",
+            });
         } finally {
             setIsLoading(false);
         }
@@ -129,111 +134,85 @@ const UserAddForm = () => {
     }
 
     return (
-        <div className="max-w-4xl mx-auto space-y-6">
+        <div className="space-y-6">
             <div className="flex justify-between items-center">
-                <h1 className="text-2xl font-semibold text-gray-900">
-                    {isEdit ? 'Edit User' : 'Add New User'}
+                <h1 className="text-2xl font-semibold">
+                    {mode === 'create' ? 'Add New User' : 'Edit User'}
                 </h1>
                 <Button variant="outline" onClick={() => navigate('/users')}>
                     Back to Users
                 </Button>
             </div>
 
-            <div className="bg-white shadow rounded-lg p-6">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="bg-card shadow rounded-lg p-6 space-y-6">
+                    <div className="grid grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                                Name
-                            </label>
-                            <input
-                                type="text"
+                            <Label htmlFor="name">Name</Label>
+                            <Input
                                 id="name"
                                 name="name"
                                 value={formData.name}
                                 onChange={handleChange}
-                                className={`w-full px-3 py-2 border ${
-                                    errors.name ? 'border-red-500' : 'border-gray-300'
-                                } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
                                 required
                             />
                             {errors.name && (
                                 <p className="text-sm text-red-500">{errors.name}</p>
                             )}
                         </div>
-
                         <div className="space-y-2">
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                                Email
-                            </label>
-                            <input
-                                type="email"
+                            <Label htmlFor="email">Email</Label>
+                            <Input
                                 id="email"
                                 name="email"
+                                type="email"
                                 value={formData.email}
                                 onChange={handleChange}
-                                className={`w-full px-3 py-2 border ${
-                                    errors.email ? 'border-red-500' : 'border-gray-300'
-                                } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
                                 required
                             />
                             {errors.email && (
                                 <p className="text-sm text-red-500">{errors.email}</p>
                             )}
                         </div>
-
                         <div className="space-y-2">
-                            <label htmlFor="role" className="block text-sm font-medium text-gray-700">
-                                Role
-                            </label>
+                            <Label htmlFor="role">Role</Label>
                             <select
                                 id="role"
                                 name="role"
                                 value={formData.role}
                                 onChange={handleChange}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                className="w-full px-3 py-2 border border-input rounded-md bg-background"
+                                required
                             >
                                 <option value="User">User</option>
                                 <option value="Admin">Admin</option>
                             </select>
                         </div>
-
-                        {!isEdit && (
+                        {mode === 'create' && (
                             <>
                                 <div className="space-y-2">
-                                    <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                                        Password
-                                    </label>
-                                    <input
-                                        type="password"
+                                    <Label htmlFor="password">Password</Label>
+                                    <Input
                                         id="password"
                                         name="password"
+                                        type="password"
                                         value={formData.password}
                                         onChange={handleChange}
-                                        className={`w-full px-3 py-2 border ${
-                                            errors.password ? 'border-red-500' : 'border-gray-300'
-                                        } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
-                                        required={!isEdit}
+                                        required={mode === 'create'}
                                     />
                                     {errors.password && (
                                         <p className="text-sm text-red-500">{errors.password}</p>
                                     )}
                                 </div>
-
                                 <div className="space-y-2">
-                                    <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
-                                        Confirm Password
-                                    </label>
-                                    <input
-                                        type="password"
+                                    <Label htmlFor="confirmPassword">Confirm Password</Label>
+                                    <Input
                                         id="confirmPassword"
                                         name="confirmPassword"
+                                        type="password"
                                         value={formData.confirmPassword}
                                         onChange={handleChange}
-                                        className={`w-full px-3 py-2 border ${
-                                            errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
-                                        } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
-                                        required={!isEdit}
+                                        required={mode === 'create'}
                                     />
                                     {errors.confirmPassword && (
                                         <p className="text-sm text-red-500">{errors.confirmPassword}</p>
@@ -242,29 +221,16 @@ const UserAddForm = () => {
                             </>
                         )}
                     </div>
-
-                    {errors.submit && (
-                        <div className="text-sm text-red-500 text-center">{errors.submit}</div>
-                    )}
-
-                    <div className="flex justify-end">
-                        <Button 
-                            type="submit" 
-                            disabled={isLoading}
-                            className="min-w-[120px]"
-                        >
-                            {isLoading ? (
-                                <>
-                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                    {isEdit ? 'Updating...' : 'Adding...'}
-                                </>
-                            ) : (
-                                isEdit ? 'Update User' : 'Add User'
-                            )}
+                    <div className="flex justify-end space-x-2">
+                        <Button variant="outline" onClick={() => navigate('/users')}>
+                            Cancel
+                        </Button>
+                        <Button type="submit">
+                            {mode === 'create' ? 'Create User' : 'Update User'}
                         </Button>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     );
 };

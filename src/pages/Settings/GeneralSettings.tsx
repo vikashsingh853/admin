@@ -5,8 +5,18 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const GeneralSettings = () => {
+  const { theme, setTheme } = useTheme();
   const [isLoading, setIsLoading] = useState(false);
   const [settings, setSettings] = useState({
     siteName: "Admin Dashboard",
@@ -21,7 +31,7 @@ const GeneralSettings = () => {
     timeFormat: "12h",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setSettings(prev => ({ ...prev, [name]: value }));
   };
@@ -139,11 +149,9 @@ const GeneralSettings = () => {
                   Receive email notifications for important updates
                 </p>
               </div>
-              <input
-                type="checkbox"
+              <Switch
                 checked={settings.enableNotifications}
-                onChange={(e) => handleSwitchChange("enableNotifications", e.target.checked)}
-                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                onCheckedChange={(checked: boolean) => handleSwitchChange("enableNotifications", checked)}
               />
             </div>
             <div className="flex items-center justify-between">
@@ -153,55 +161,74 @@ const GeneralSettings = () => {
                   Temporarily disable the site for maintenance
                 </p>
               </div>
-              <input
-                type="checkbox"
+              <Switch
                 checked={settings.maintenanceMode}
-                onChange={(e) => handleSwitchChange("maintenanceMode", e.target.checked)}
-                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                onCheckedChange={(checked: boolean) => handleSwitchChange("maintenanceMode", checked)}
+              />
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="space-y-0.5">
+                <Label>Dark Mode</Label>
+                <p className="text-sm text-muted-foreground">
+                  Toggle between light and dark theme
+                </p>
+              </div>
+              <Switch
+                checked={theme === "dark"}
+                onCheckedChange={(checked: boolean) => setTheme(checked ? "dark" : "light")}
               />
             </div>
             <div className="space-y-2">
               <Label htmlFor="timezone">Timezone</Label>
-              <select
-                id="timezone"
-                name="timezone"
+              <Select
                 value={settings.timezone}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-input rounded-md"
+                onValueChange={(value) => setSettings(prev => ({ ...prev, timezone: value }))}
               >
-                <option value="UTC">UTC</option>
-                <option value="EST">Eastern Time (EST)</option>
-                <option value="PST">Pacific Time (PST)</option>
-                <option value="GMT">Greenwich Mean Time (GMT)</option>
-              </select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select timezone" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="UTC">UTC</SelectItem>
+                  <SelectItem value="EST">Eastern Time (EST)</SelectItem>
+                  <SelectItem value="CST">Central Time (CST)</SelectItem>
+                  <SelectItem value="MST">Mountain Time (MST)</SelectItem>
+                  <SelectItem value="PST">Pacific Time (PST)</SelectItem>
+                  <SelectItem value="GMT">Greenwich Mean Time (GMT)</SelectItem>
+                  <SelectItem value="IST">Indian Standard Time (IST)</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="dateFormat">Date Format</Label>
-                <select
-                  id="dateFormat"
-                  name="dateFormat"
+                <Select
                   value={settings.dateFormat}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border border-input rounded-md"
+                  onValueChange={(value) => setSettings(prev => ({ ...prev, dateFormat: value }))}
                 >
-                  <option value="MM/DD/YYYY">MM/DD/YYYY</option>
-                  <option value="DD/MM/YYYY">DD/MM/YYYY</option>
-                  <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-                </select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select date format" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="MM/DD/YYYY">MM/DD/YYYY</SelectItem>
+                    <SelectItem value="DD/MM/YYYY">DD/MM/YYYY</SelectItem>
+                    <SelectItem value="YYYY-MM-DD">YYYY-MM-DD</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="timeFormat">Time Format</Label>
-                <select
-                  id="timeFormat"
-                  name="timeFormat"
+                <Select
                   value={settings.timeFormat}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border border-input rounded-md"
+                  onValueChange={(value) => setSettings(prev => ({ ...prev, timeFormat: value }))}
                 >
-                  <option value="12h">12-hour</option>
-                  <option value="24h">24-hour</option>
-                </select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select time format" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="12h">12-hour</SelectItem>
+                    <SelectItem value="24h">24-hour</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
           </CardContent>

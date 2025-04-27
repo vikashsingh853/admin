@@ -21,7 +21,10 @@ type TableProps<T extends Record<string, unknown>> = {
     actions?: (row: T) => { label: string; onClick: () => void }[];
     shownKeys?: string[];
     mandatoryKeys: string[];
-    filterKeys?:string[]
+    filterKeys?: string[];
+    customRenderers?: {
+        [key: string]: (value: any) => React.ReactNode;
+    };
 };
 
 export function DataTable<T extends Record<string, any>>({
@@ -30,7 +33,8 @@ export function DataTable<T extends Record<string, any>>({
     actions,
     shownKeys = [],
     mandatoryKeys,
-    filterKeys
+    filterKeys,
+    customRenderers = {}
 }: TableProps<T>) {
     const [data, setData] = useState<T[]>(initialData || []);
     const [loading, setLoading] = useState(false);
@@ -151,19 +155,27 @@ export function DataTable<T extends Record<string, any>>({
                     }
                 >
                     {key} {sorting?.id === key ? (sorting.desc ? "🔽" : "🔼") : ""}
-                 { !mandatoryKeys.includes(key)&&   <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            handleToggleColumn(key);
-                        }}
-                    >
-                        ✖
-                    </Button>}
+                    {!mandatoryKeys.includes(key) && (
+                        <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                handleToggleColumn(key);
+                            }}
+                        >
+                            ✖
+                        </Button>
+                    )}
                 </div>
             ),
-            cell: ({ row }) => row.original[key] ?? "-",
+            cell: ({ row }: { row: { original: T; index: number } }) => {
+                const value = row.original[key];
+                if (customRenderers[key]) {
+                    return customRenderers[key](value);
+                }
+                return value ?? "-";
+            },
         })),
         {
             accessorKey: "actions",
@@ -251,7 +263,7 @@ export function DataTable<T extends Record<string, any>>({
                         {table.getRowModel().rows.map((row) => (
                             <tr key={row.id} className="border-b">
                                 {row.getVisibleCells().map((cell) => (
-                                    <td key={cell.id} className="p-2 border-r">
+                                    <td key={cell.id} className="p-2 border-r bg-background">
                                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                     </td>
                                 ))}

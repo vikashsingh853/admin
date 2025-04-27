@@ -14,7 +14,7 @@ const Sidebar = ({ isExpanded, isMobile, setSidebarExpanded }: Props) => {
   return (
     <aside
       className={cn(
-        "fixed left-0 top-0 z-20 h-full pt-16 transition-all duration-300 bg-white border-r",
+        "fixed left-0 top-0 z-20 h-full pt-16 transition-all duration-300 bg-background border-r",
         isExpanded ? "w-64" : "w-16",
         isMobile ? (isExpanded ? "translate-x-0" : "-translate-x-full") : "translate-x-0",
         "lg:translate-x-0" // Always show on desktop
