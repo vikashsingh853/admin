@@ -10,7 +10,7 @@ const UserAddForm = () => {
     const navigate = useNavigate();
     const { mode, id } = useParams();
     const { toast } = useToast();
-    const [isLoading, setIsLoading] = useState(false);
+    const [, setIsLoading] = useState(false);
     const [isFetching, setIsFetching] = useState(mode === 'edit');
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [formData, setFormData] = useState({

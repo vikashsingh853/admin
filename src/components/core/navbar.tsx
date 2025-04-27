@@ -100,23 +100,7 @@ const Navbar = ({ toggleSidebar }: NavProps) => {
     }));
   };
 
-  const handleProfileUpdate = async () => {
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      toast({
-        title: "Profile updated",
-        description: "Your profile has been updated successfully.",
-      });
-      setShowProfileModal(false);
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to update profile. Please try again.",
-        variant: "destructive",
-      });
-    }
-  };
+ 
 
   return (
     <nav className="border-b bg-background fixed z-30 w-full">

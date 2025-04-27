@@ -5,7 +5,6 @@ import { useNavigation } from "@/lib/hooks/useNavigation";
 import Navbar from "./navbar";
 import Breadcrumb from "./breadcrumb";
 import Sidebar from "./sidebar";
-import { ProtectedRoute } from "../ProtectedRoute";
 
 const AdminLayout = () => {
     const [sidebarExpanded, setSidebarExpanded] = useState(true);

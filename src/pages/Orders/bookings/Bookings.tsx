@@ -1,6 +1,6 @@
 import { DataTable } from "@/components/table/data-table";
 import { Button } from "@/components/ui/button";
-import { Outlet, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import {
     Dialog,
     DialogContent,
@@ -189,7 +189,6 @@ const Bookings = () => {
                 </DialogContent>
             </Dialog>
         </div>
-        <Outlet />
     </>
 
     );

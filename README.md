@@ -11,6 +11,8 @@ A modern admin dashboard built with React, TypeScript, and Tailwind CSS. This pr
 - Recharts for data visualization
 - Responsive design
 - Google Authentication for secure access
+- Theme system with light, dark, and system preferences
+- Persistent theme settings with localStorage
 
 ## Tech Stack
 
@@ -22,6 +24,7 @@ A modern admin dashboard built with React, TypeScript, and Tailwind CSS. This pr
 - **Build Tool**: Vite
 - **Package Manager**: pnpm
 - **Authentication**: Google OAuth 2.0
+- **Theme System**: Custom theme context with system preference detection
 
 ## Getting Started
 
@@ -94,3 +97,6 @@ vks-admin/
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+##screenshots
+

@@ -41,8 +41,8 @@ export function DataTable<T extends Record<string, any>>({
 
     const [visibleColumns, setVisibleColumns] = useState<string[]>([]);
     const [visibleColumnsMenu, setVisibleColumnsMenu] = useState<string[]>([]);
-    const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(5);
+    const [page ] = useState(1);
+    const [pageSize] = useState(5);
     const [sorting, setSorting] = useState<{ id: string; desc: boolean } | null>(null);
     const [filter, setFilter] = useState<{ [key: string]: string }>({});
     const [debouncedFilter, setDebouncedFilter] = useState(filter);
